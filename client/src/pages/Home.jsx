@@ -202,7 +202,7 @@ export default function Home() {
     if (!isSignedIn) return
     setLoadingRooms(true)
     api.get('/api/rooms')
-      .then((res) => setRooms(res.data))
+      .then((res) => setRooms(Array.isArray(res.data) ? res.data : []))
       .catch(() => {})
       .finally(() => setLoadingRooms(false))
   }, [isSignedIn])
