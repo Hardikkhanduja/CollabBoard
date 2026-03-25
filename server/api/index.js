@@ -9,7 +9,11 @@ const app = express()
 
 const CLIENT_URL = process.env.CLIENT_URL ?? 'http://localhost:5173'
 
-app.use(cors({ origin: CLIENT_URL, credentials: true }))
+const allowedOrigins = [CLIENT_URL, 'https://collab-board-coral.vercel.app']
+app.use(cors({ origin: (origin, cb) => {
+  if (!origin || allowedOrigins.includes(origin)) return cb(null, true)
+  cb(new Error('Not allowed by CORS'))
+}, credentials: true }))
 app.use(express.json())
 
 app.get('/health', (_req, res) => res.json({ status: 'ok' }))
