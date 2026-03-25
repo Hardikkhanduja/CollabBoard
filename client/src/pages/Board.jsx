@@ -255,10 +255,8 @@ export default function Board() {
 
         <button
           onClick={() => {
-            const clientUrl = import.meta.env.VITE_CLIENT_URL ?? window.location.origin
-            const url = `${clientUrl}/join/${roomMeta?.inviteCode}`
-            navigator.clipboard.writeText(url).then(() => {
-              import('../lib/toast').then(({ toast }) => toast.success('Invite link copied!'))
+            navigator.clipboard.writeText(roomMeta?.inviteCode).then(() => {
+              import('../lib/toast').then(({ toast }) => toast.success('Invite code copied!'))
             })
           }}
           disabled={!roomMeta?.inviteCode}
