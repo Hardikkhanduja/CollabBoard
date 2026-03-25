@@ -169,8 +169,4 @@ collabboard/
 | [Supabase](https://supabase.com) | PostgreSQL database |
 | [Upstash](https://upstash.com) | Redis for presence/caching |
 
----
 
-## 📄 License
-
-MIT © [Hardik Khanduja](https://github.com/Hardikkhanduja)
