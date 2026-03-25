@@ -25,6 +25,37 @@ const inputStyle = {
   color: '#fafafa',
 }
 
+function SignInPromptModal({ onClose }) {
+  return (
+    <div
+      className="fixed inset-0 flex items-center justify-center"
+      style={{ zIndex: 50, background: 'rgba(0,0,0,0.7)' }}
+      onClick={onClose}
+    >
+      <div
+        className="w-full max-w-sm mx-4 rounded-xl p-6 border flex flex-col items-center gap-4 text-center"
+        style={modalBase}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button onClick={onClose} className="self-end text-text-muted hover:text-text-primary transition-colors">
+          <X size={16} />
+        </button>
+        <Camera size={32} className="text-accent" />
+        <h2 className="text-text-primary font-semibold text-base">Sign in to continue</h2>
+        <p className="text-text-muted text-sm">You need to sign in or create an account before creating or joining a board.</p>
+        <SignInButton mode="modal">
+          <button
+            onClick={onClose}
+            className="w-full py-2 rounded-md text-sm font-semibold text-background bg-accent transition-opacity hover:opacity-90"
+          >
+            Sign In / Sign Up
+          </button>
+        </SignInButton>
+      </div>
+    </div>
+  )
+}
+
 function CreateRoomModal({ onClose, onCreated }) {
   const [name, setName] = useState('')
   const [loading, setLoading] = useState(false)
@@ -194,6 +225,7 @@ export default function Home() {
   const { isSignedIn } = useAuth()
   const [showCreate, setShowCreate] = useState(false)
   const [showJoin, setShowJoin] = useState(false)
+  const [showSignInPrompt, setShowSignInPrompt] = useState(false)
   const [rooms, setRooms] = useState([])
   const [loadingRooms, setLoadingRooms] = useState(false)
   const [confirmDelete, setConfirmDelete] = useState(null) // { id, name }
@@ -269,13 +301,13 @@ export default function Home() {
         </p>
         <div className="flex flex-col sm:flex-row gap-3">
           <button
-            onClick={() => setShowCreate(true)}
+            onClick={() => isSignedIn ? setShowCreate(true) : setShowSignInPrompt(true)}
             className="px-6 py-2.5 rounded-md text-sm font-semibold text-background bg-accent transition-opacity hover:opacity-90"
           >
             Create Board
           </button>
           <button
-            onClick={() => setShowJoin(true)}
+            onClick={() => isSignedIn ? setShowJoin(true) : setShowSignInPrompt(true)}
             className="px-6 py-2.5 rounded-md text-sm font-semibold text-text-primary border transition-colors hover:bg-surface"
             style={{ borderColor: 'rgba(255,255,255,0.08)' }}
           >
@@ -339,6 +371,7 @@ export default function Home() {
         </section>
       </SignedIn>
 
+      {showSignInPrompt && <SignInPromptModal onClose={() => setShowSignInPrompt(false)} />}
       {showCreate && <CreateRoomModal onClose={() => setShowCreate(false)} onCreated={handleCreated} />}
       {showJoin && <JoinRoomModal onClose={() => setShowJoin(false)} onJoined={handleJoined} />}
       {confirmDelete && (
