@@ -5,7 +5,6 @@
 **Real-time collaborative whiteboard — draw, annotate, and create together, live.**
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-collab--board--coral.vercel.app-6ee7b7?style=for-the-badge)](https://collab-board-coral.vercel.app)
-[![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
 
 </div>
 
