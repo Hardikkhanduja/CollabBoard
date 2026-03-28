@@ -177,7 +177,7 @@ export default function Board() {
 
   return (
     <div
-      style={{ width: '100vw', height: '100vh', overflow: 'hidden', position: 'relative' }}
+      style={{ width: '100vw', height: '100vh', minHeight: '-webkit-fill-available', overflow: 'hidden', position: 'relative' }}
       onPointerMove={handlePointerMove}
     >
       {/* Canvas — offset top by 52px to sit below the top bar */}

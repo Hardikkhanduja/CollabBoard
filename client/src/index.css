@@ -17,6 +17,11 @@
     --text-muted: #71717a;
   }
 
+  html, body, #root {
+    height: 100%;
+    height: -webkit-fill-available;
+  }
+
   * {
     border-color: rgba(255, 255, 255, 0.08);
   }

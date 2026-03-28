@@ -3,11 +3,13 @@ import '@tldraw/tldraw/tldraw.css'
 
 export default function CanvasWrapper({ store, onEditorReady }) {
   return (
-    <Tldraw
-      store={store}
-      onMount={(editor) => {
-        onEditorReady?.(editor)
-      }}
-    />
+    <div style={{ position: 'absolute', inset: 0, touchAction: 'none' }}>
+      <Tldraw
+        store={store}
+        onMount={(editor) => {
+          onEditorReady?.(editor)
+        }}
+      />
+    </div>
   )
 }
