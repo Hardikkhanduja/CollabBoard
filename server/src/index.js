@@ -13,11 +13,22 @@ const httpServer = createServer(app)
 const PORT = process.env.PORT ?? 4000
 const CLIENT_URL = process.env.CLIENT_URL ?? 'http://localhost:5173'
 
-const allowedOrigins = [CLIENT_URL, 'https://collab-board-coral.vercel.app']
-app.use(cors({ origin: (origin, cb) => {
-  if (!origin || allowedOrigins.includes(origin)) return cb(null, true)
-  cb(new Error('Not allowed by CORS'))
-}, credentials: true }))
+const allowedOrigins = [
+  CLIENT_URL,
+  'https://collab-board-coral.vercel.app',
+  'http://localhost:5173',
+]
+
+app.use(cors({
+  origin: (origin, cb) => {
+    if (!origin) return cb(null, true)
+    if (allowedOrigins.includes(origin)) return cb(null, true)
+    if (/\.vercel\.app$/.test(origin)) return cb(null, true)
+    cb(new Error('Not allowed by CORS'))
+  },
+  credentials: true
+}))
+
 app.use(express.json())
 
 app.get('/health', (_req, res) => {
@@ -28,7 +39,6 @@ app.use('/api/users', usersRouter)
 app.use('/api/rooms', roomsRouter)
 app.use('/api/rooms/:id/snapshots', snapshotsRouter)
 
-// Real-time: Yjs WebSocket provider + Socket.io
 setupYjsProvider(httpServer)
 setupSocketIO(httpServer, CLIENT_URL)
 
